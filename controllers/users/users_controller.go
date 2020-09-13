@@ -24,14 +24,14 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, result)
+	c.JSON(http.StatusCreated, result.Marshal())
 }
 
 //Get get a User by the ID
 func Get(c *gin.Context) {
-	userID, userIdErr := getUserID(c)
-	if userIdErr != nil {
-		c.JSON(userIdErr.Status(), userIdErr)
+	userID, userIDErr := getUserID(c)
+	if userIDErr != nil {
+		c.JSON(userIDErr.Status(), userIDErr)
 		return
 	}
 
@@ -41,7 +41,7 @@ func Get(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, user.Marshal())
 }
 
 //Update update a User by the ID and the given body
@@ -52,9 +52,9 @@ func Update(c *gin.Context) {
 
 //Delete deletes a User by the given ID
 func Delete(c *gin.Context) {
-	userID, userIdErr := getUserID(c)
-	if userIdErr != nil {
-		c.JSON(userIdErr.Status(), userIdErr)
+	userID, userIDErr := getUserID(c)
+	if userIDErr != nil {
+		c.JSON(userIDErr.Status(), userIDErr)
 		return
 	}
 
@@ -82,7 +82,7 @@ func Login(c *gin.Context) {
 		c.JSON(err.Status(), err)
 		return
 	}
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, user.Marshal())
 }
 
 func getUserID(c *gin.Context) (*string, api_errors.RestErr) {
