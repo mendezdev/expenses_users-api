@@ -28,7 +28,9 @@ func (user *User) Save() api_errors.RestErr {
 		return api_errors.NewInternalServerError("database error", insertErr)
 	}
 
-	fmt.Println("INSERTED ID: ", insertResult)
+	if insertedID, ok := insertResult.InsertedID.(primitive.ObjectID); ok {
+		user.ID = insertedID.Hex()
+	}
 	return nil
 }
 
