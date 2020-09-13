@@ -3,10 +3,10 @@ package services
 import (
 	"fmt"
 
-	"github.com/mendezdev/golang_mongo-example/domain/users"
-	"github.com/mendezdev/golang_mongo-example/utils/api_errors"
-	"github.com/mendezdev/golang_mongo-example/utils/crypto_utils"
-	"github.com/mendezdev/golang_mongo-example/utils/date_utils"
+	"github.com/mendezdev/expenses_users-api/domain/users"
+	"github.com/mendezdev/expenses_users-api/utils/api_errors"
+	"github.com/mendezdev/expenses_users-api/utils/crypto_utils"
+	"github.com/mendezdev/expenses_users-api/utils/date_utils"
 )
 
 var (

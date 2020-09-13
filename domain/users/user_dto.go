@@ -3,7 +3,7 @@ package users
 import (
 	"strings"
 
-	"github.com/mendezdev/golang_mongo-example/utils/api_errors"
+	"github.com/mendezdev/expenses_users-api/utils/api_errors"
 )
 
 //User is the domain

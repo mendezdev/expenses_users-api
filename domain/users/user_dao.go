@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/mendezdev/golang_mongo-example/db/mongodb"
-	"github.com/mendezdev/golang_mongo-example/utils/api_errors"
+	"github.com/mendezdev/expenses_users-api/db/mongodb"
+	"github.com/mendezdev/expenses_users-api/utils/api_errors"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"

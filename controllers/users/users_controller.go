@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mendezdev/golang_mongo-example/domain/users"
-	"github.com/mendezdev/golang_mongo-example/services"
-	"github.com/mendezdev/golang_mongo-example/utils/api_errors"
+	"github.com/mendezdev/expenses_users-api/domain/users"
+	"github.com/mendezdev/expenses_users-api/services"
+	"github.com/mendezdev/expenses_users-api/utils/api_errors"
 )
 
 //CreateUser creates a User using the body provived

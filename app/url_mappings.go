@@ -1,8 +1,8 @@
 package app
 
 import (
-	"github.com/mendezdev/golang_mongo-example/controllers/ping"
-	"github.com/mendezdev/golang_mongo-example/controllers/users"
+	"github.com/mendezdev/expenses_users-api/controllers/ping"
+	"github.com/mendezdev/expenses_users-api/controllers/users"
 )
 
 func mapUrls() {
