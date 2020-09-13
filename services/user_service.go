@@ -1,8 +1,6 @@
 package services
 
 import (
-	"fmt"
-
 	"github.com/mendezdev/expenses_users-api/domain/users"
 	"github.com/mendezdev/expenses_users-api/utils/api_errors"
 	"github.com/mendezdev/expenses_users-api/utils/crypto_utils"
@@ -66,8 +64,6 @@ func (s *usersService) LoginUser(userRequest users.UserLoginRequest) (*users.Use
 		return nil, err
 	}
 
-	fmt.Println("userRequest.Password", userRequest.Password)
-	fmt.Println("userDao.Password", userDao.Password)
 	isValid := crypto_utils.CheckHash(userRequest.Password, userDao.Password)
 	if !isValid {
 		return nil, api_errors.NewBadRequestError("invalid credentials")
