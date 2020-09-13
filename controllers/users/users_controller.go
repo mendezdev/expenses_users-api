@@ -67,6 +67,24 @@ func Delete(c *gin.Context) {
 	c.JSON(http.StatusOK, map[string]string{"status": "deleted"})
 }
 
+// Login receive users credentials and try to authenticate the user
+func Login(c *gin.Context) {
+	var userRequest users.UserLoginRequest
+	if err := c.ShouldBindJSON(&userRequest); err != nil {
+		apiErr := api_errors.NewBadRequestError("invalid json body")
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+
+	//user service to check user credentials and return to the client
+	user, err := services.UsersService.LoginUser(userRequest)
+	if err != nil {
+		c.JSON(err.Status(), err)
+		return
+	}
+	c.JSON(http.StatusOK, user)
+}
+
 func getUserID(c *gin.Context) (*string, api_errors.RestErr) {
 	userID := c.Param("user_id")
 	if userID == "" {

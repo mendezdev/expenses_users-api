@@ -8,16 +8,16 @@ import (
 
 //User is the domain
 type User struct {
-	ID          string `bson:"_id,omitempty"`
-	FirstName   string `json:"first_name"`
-	LastName    string `json:"last_name"`
+	ID          string `json:"id" bson:"_id,omitempty"`
+	FirstName   string `json:"first_name" bson:"first_name"`
+	LastName    string `json:"last_name" bson:"last_name"`
 	Email       string `json:"email"`
-	DateCreated string `json:"date_created"`
+	DateCreated string `json:"date_created" bson:"date_created"`
 	Status      string `json:"status"`
 	Password    string `json:"password"`
 }
 
-//Validate validates FirstName, LastName, Email and Password (only for trimspace)
+//Validate validates FirstName, LastName, Email and Password (only trimspace)
 func (user *User) Validate() api_errors.RestErr {
 	user.FirstName = strings.TrimSpace(user.FirstName)
 	user.LastName = strings.TrimSpace(user.LastName)

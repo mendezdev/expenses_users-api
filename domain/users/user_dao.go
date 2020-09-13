@@ -65,17 +65,31 @@ func (user *User) Delete() api_errors.RestErr {
 	return nil
 }
 
-//IsAvailableEmail check is email exist already in database
-func (user *User) IsAvailableEmail() api_errors.RestErr {
-	findErr := user.findOneByFilter("email", user.Email)
-	if findErr != nil {
-		if findErr == mongo.ErrNoDocuments {
-			return nil
+// FindByEmailAndPassword try to get a User by the email and password
+func (user *User) FindByEmailAndPassword() api_errors.RestErr {
+	collection := getUserCollection()
+	filter := bson.D{{"email", user.Email}, {"password", user.Password}}
+
+	userGetErr := collection.FindOne(context.TODO(), filter).Decode(&user)
+	if userGetErr != nil {
+		if userGetErr == mongo.ErrNoDocuments {
+			return api_errors.NewNotFoundError("user not found with given values")
 		}
-		fmt.Println("error trying to find document", findErr)
-		return api_errors.NewInternalServerError("database error", findErr)
+		return api_errors.NewInternalServerError("database error", userGetErr)
 	}
-	return api_errors.NewBadRequestError("email is not available")
+
+	return nil
+}
+
+// FindByEmail fill the &user with the data user if the filter founds one
+// otherwise returns an RestErr
+func (user *User) FindByEmail() api_errors.RestErr {
+	return user.searchByEmail(false)
+}
+
+// IsAvailableEmail returns an RestErr if the email already exist
+func (user *User) IsAvailableEmail() api_errors.RestErr {
+	return user.searchByEmail(true)
 }
 
 func (user *User) findOneByFilter(fieldName string, fieldValue interface{}) error {
@@ -87,6 +101,24 @@ func (user *User) findOneByFilter(fieldName string, fieldValue interface{}) erro
 		return userGetErr
 	}
 
+	return nil
+}
+
+func (user *User) searchByEmail(isForEmailAvailable bool) api_errors.RestErr {
+	findErr := user.findOneByFilter("email", user.Email)
+	if findErr != nil {
+		if findErr == mongo.ErrNoDocuments {
+			if isForEmailAvailable {
+				return nil
+			}
+			return api_errors.NewNotFoundError("no user found with given email")
+		}
+		return api_errors.NewInternalServerError("database error", findErr)
+	}
+
+	if isForEmailAvailable {
+		return api_errors.NewBadRequestError("email is not available")
+	}
 	return nil
 }
 
