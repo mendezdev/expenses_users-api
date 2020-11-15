@@ -3,16 +3,23 @@ package app
 import (
 	"fmt"
 
-	"github.com/gin-gonic/gin"
+	"github.com/mendezdev/expenses_users-api/db/mongodb"
+	users "github.com/mendezdev/expenses_users-api/users/web"
 )
 
-var (
-	router = gin.Default()
-)
+type httpServices struct {
+	userHTTPService users.UserHTTPService
+}
 
 //StartApplication set all the url mappings and start the server
 func StartApplication() {
-	mapUrls()
+	db := mongodb.ConnectToDB("mongodb://localhost:27017")
+	userService := users.NewUserHTTPService(db)
+	services := &httpServices{
+		userHTTPService: userService,
+	}
+
+	router := routes(services)
 
 	fmt.Println("about to start the application...")
 	router.Run(":8080")
