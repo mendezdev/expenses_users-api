@@ -8,7 +8,7 @@ import (
 )
 
 type httpServices struct {
-	userHTTPService users.UserHTTPService
+	users users.UserHTTPService
 }
 
 //StartApplication set all the url mappings and start the server
@@ -16,7 +16,7 @@ func StartApplication() {
 	db := mongodb.ConnectToDB("mongodb://localhost:27017")
 	userService := users.NewUserHTTPService(db)
 	services := &httpServices{
-		userHTTPService: userService,
+		users: userService,
 	}
 
 	router := routes(services)
